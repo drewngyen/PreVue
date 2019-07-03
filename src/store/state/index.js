@@ -5,7 +5,7 @@ const newState = {
   icons,
   htmlElementMap,
   // every single time we create a component
-    // 
+  // sent to export project component
   componentMap: {
     App: {
       componentName: 'App',
@@ -16,10 +16,12 @@ const newState = {
       componentName: 'HomeView',
       children: [],
       htmlList: []
-    }
+    },
+    // NewView: {}
   },
   routes: {
-    HomeView: []
+    HomeView: [],
+    // NewView: []
   },
   /**
    *
