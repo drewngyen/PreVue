@@ -1,6 +1,7 @@
 import * as types from './types';
 
 const actions = {
+  // 
   [types.registerComponent]: ({ state, commit }, payload) => {
     const { componentName } = payload;
     if (!state.componentMap[componentName]) {

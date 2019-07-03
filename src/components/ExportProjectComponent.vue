@@ -7,6 +7,7 @@
     <span class="white--text">Export Project</span>
   </button>
 </template>
+
 // Where all of the boilerplate is exported
 <script>
 import { mapState } from 'vuex';

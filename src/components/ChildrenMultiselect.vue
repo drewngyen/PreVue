@@ -46,6 +46,7 @@ export default {
       'updateComponentChildrenMultiselectValue',
       'updateActiveComponentChildrenValue'
     ]),
+    // 
     handleSelect(value) {
       console.log('VALUE', value);
       if (this.modalOpen) this.updateActiveComponentChildrenValue(value);

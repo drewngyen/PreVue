@@ -3,6 +3,7 @@ import * as types from './types';
 import localforage from 'localforage';
 
 const mutations = {
+  // pushs new component to componentMap
   [types.ADD_COMPONENT_TO_COMPONENT_MAP]: (state, payload) => {
     const { componentName, htmlList, children, isActive } = payload;
     state.componentMap = {
@@ -19,9 +20,12 @@ const mutations = {
       }
     };
   },
+  // adds a html tag from the Icons.vue to the HomeQueue.vue
   [types.ADD_TO_SELECTED_ELEMENT_LIST]: (state, payload) => {
     state.selectedElementList.push({ text: payload, children: [] });
   },
+  // allows user to create a new component in ComponentDisplay.vue
+    // invovled in creating a new component, porbably does more
   [types.SET_SELECTED_ELEMENT_LIST]: (state, payload) => {
     state.selectedElementList = payload;
   },
@@ -97,6 +101,7 @@ const mutations = {
       [payload]: []
     };
   },
+  // 
   [types.ADD_ROUTE_TO_COMPONENT_MAP]: (state, payload) => {
     const { route, children } = payload;
     state.componentMap = {
@@ -107,12 +112,15 @@ const mutations = {
       }
     };
   },
+  // changes the route map (ie. homeview -> homeview_2_test)
   [types.SET_ACTIVE_ROUTE]: (state, payload) => {
     state.activeRoute = payload;
   },
+  // probably places the component inside the same route map (ie. homeview)
   [types.ADD_COMPONENT_TO_ACTIVE_ROUTE_IN_ROUTE_MAP]: (state, payload) => {
     state.routes[state.activeRoute].push(payload);
   },
+  // invoked when a component is selected
   [types.SET_ACTIVE_COMPONENT]: (state, payload) => {
     state.activeComponent = payload;
   },
@@ -122,6 +130,7 @@ const mutations = {
   [types.SET_ACTIVE_ROUTE_ARRAY]: (state, payload) => {
     state.routes[state.activeRoute] = payload;
   },
+  // adds the component to the selected route (ex: HomeView)
   [types.ADD_COMPONENT_TO_ACTIVE_ROUTE_CHILDREN]: (state, payload) => {
     state.componentMap[state.activeRoute].children.push(payload);
   },
@@ -132,9 +141,13 @@ const mutations = {
     });
     state.activeTab = state.activeTab - 1;
   },
+  // executed when a new component is made, also invoked when a child is added to the parent from the sidebar (EditSidebar or HomeSidebar?)
+  // also invoked when clicked on invoking the modal-view
   [types.UPDATE_COMPONENT_CHILDREN_MULTISELECT_VALUE]: (state, payload) => {
     state.componentChildrenMultiselectValue = payload;
   },
+  // executed when a new component is made
+  // additionally addes children to the component
   [types.UPDATE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
     const { component, value } = payload;
     state.componentMap[component].children = value;
@@ -142,6 +155,7 @@ const mutations = {
   [types.UPDATE_ACTIVE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
     state.componentMap[state.activeComponent].children = payload;
   },
+  // allows usr to change the name of component!!
   [types.UPDATE_COMPONENT_NAME_INPUT_VALUE]: (state, payload) => {
     state.componentNameInputValue = payload;
   },
@@ -149,6 +163,7 @@ const mutations = {
     const { component, value } = payload;
     state.componentMap[component].children.push(value);
   },
+  // invoked when element is double clicked, changing the boolean value
   [types.UPDATE_OPEN_MODAL]: (state, payload) => {
     state.modalOpen = payload;
   }

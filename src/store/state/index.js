@@ -4,6 +4,8 @@ import htmlElementMap from './htmlElementMap';
 const newState = {
   icons,
   htmlElementMap,
+  // every single time we create a component
+    // 
   componentMap: {
     App: {
       componentName: 'App',
@@ -20,7 +22,7 @@ const newState = {
     HomeView: []
   },
   /**
-   * 
+   *
    */
   componentNameInputValue: '',
   projects: [{ filename: 'Untitled-1', lastSavedLocation: '' }],
