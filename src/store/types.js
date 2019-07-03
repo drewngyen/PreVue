@@ -60,10 +60,12 @@ export const incrementProjectId = 'incrementProjectId';
 export const setRoutes = 'setRoutes';
 export const setComponentHtmlList = 'setComponentHtmlList';
 export const deleteProjectTab = 'deleteProjectTab';
+// ChildrenMultiselect actions
 export const updateComponentChildrenMultiselectValue =
   'updateComponentChildrenMultiselectValue';
 export const updateActiveComponentChildrenValue =
   'updateActiveComponentChildrenValue';
+
 export const updateComponentChildrenValue = 'updateComponentChildrenValue';
 export const updateComponentNameInputValue = 'updateComponentNameInputValue';
 export const updateOpenModal = 'updateOpenModal';

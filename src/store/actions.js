@@ -1,6 +1,7 @@
 import * as types from './types';
 
 const actions = {
+  // 
   [types.registerComponent]: ({ state, commit }, payload) => {
     const { componentName } = payload;
     if (!state.componentMap[componentName]) {
@@ -21,17 +22,22 @@ const actions = {
       commit(types.SET_SELECTED_ELEMENT_LIST, []);
     }
   },
+  // sets component inside componentDisplay
   [types.setSelectedElementList]: ({ commit }, payload) => {
     if (payload) {
       commit(types.SET_SELECTED_ELEMENT_LIST, payload);
     }
   },
+  // adds component to the homeQueue
   [types.addToSelectedElementList]: ({ commit }, payload) => {
     commit(types.ADD_TO_SELECTED_ELEMENT_LIST, payload);
   },
   [types.addToComponentElementList]: ({ commit }, payload) => {
     commit(types.ADD_TO_COMPONENT_HTML_LIST, payload);
   },
+  /**
+   * @module: UNUSED?
+   */
   [types.setClickedElementList]: ({ commit }, payload) => {
     commit(types.SET_CLICKED_ELEMENT_LIST, payload);
   },
