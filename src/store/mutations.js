@@ -56,7 +56,6 @@ const mutations = {
     }
     parseAndDelete(htmlList);
   },
-
   [types.SET_CLICKED_ELEMENT_LIST]: (state, payload) => {
     const componentName = state.activeComponent;
     state.componentMap[componentName].htmlList = payload;
