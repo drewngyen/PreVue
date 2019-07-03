@@ -40,15 +40,20 @@ export default {
      * @description import routed components from the /views/ dir
      * @argument: this.componentMap['App'].children
      * bug: showing undefined in the import routes 
+     * fix: changing the child.componentName to child
      */
     createRouterImports(appChildren) {
       let str = "import Vue from 'vue'\nimport Router from 'vue-router'\n";
       appChildren.forEach(child => {
-        console.log(child);
-        str += `import ${child.componentName} from './views/${
+        console.log(`createRouterImports child: ${child}`);
+        str += `import ${
+          // child.componentName
+          child
+          } from './views/${
           // this reference to store state is buggy, returns undefined
           //  import undefined from './views/undefined.vue'
-          child.componentName
+          // child.componentName
+          child
         }.vue'\n`;
       });
       return str;
@@ -62,14 +67,20 @@ export default {
       let str =
         "export default new Router({\n\tmode: 'history',\n\tbase: process.env.BASE_URL,\n\troutes: [\n";
       appChildren.forEach(child => {
-        if (child.componentName === 'HomeView')
+        console.log(`createExport child: ${child}`);
+        // changed if/else: `child.componentName` to `name`
+        if (child === 'HomeView') {
+          console.log(`if createExport addChildren child.componentName${child.componentName}`);
           str += `\t\t{\n\t\t\tpath: '/',\n\t\t\tname:'${
-            child.componentName
-          }',\n\t\t\tcomponent:${child.componentName}\n\t\t},\n`;
-        else
-          str += `\t\t{\n\t\t\tpath: '/${child.componentName}',\n\t\t\tname:'${
-            child.componentName
-          }',\n\t\t\tcomponent: ${child.componentName}\n\t\t},\n`;
+            child
+          }',\n\t\t\tcomponent:${child}\n\t\t},\n`;
+      }
+        else {
+          console.log(`else createExport addChildren child.componentName${child}`);
+          str += `\t\t{\n\t\t\tpath: '/${child}',\n\t\t\tname:'${
+            child
+          }',\n\t\t\tcomponent: ${child}\n\t\t},\n`;
+        }
       });
       str += `\t]\n})\n`;
       return str;
@@ -110,17 +121,17 @@ export default {
     writeTemplate(compName, children) {
       let str = '';
       if (compName === 'App') {
-        console.log(`form if compName === 'App'`);
-        console.log(`children: ${children}`)
+        // console.log(`form if compName === 'App'`);
+        // console.log(`children: ${children}`)
         str += `<div id="app">\n\t\t<div id="nav">\n`;
         children.forEach(name => {
           if (name === 'HomeView') {
-            console.log(`HomeView if statement invoked!`);
-            console.log(`name: ${name}`);
-            console.log(`name.componentName: ${
-              // name.componentName
-              name
-              }`);
+            // console.log(`HomeView if statement invoked!`);
+            // console.log(`name: ${name}`);
+            // console.log(`name.componentName: ${
+            //   // name.componentName
+            //   name
+            //   }`);
 
             str += `\t\t\t<router-link to="/">${
               // name.componentName
@@ -129,8 +140,8 @@ export default {
             
           }
           else {
-            console.log(`else invoked`);
-            console.log(`name: ${name}`);
+            // console.log(`else invoked`);
+            // console.log(`name: ${name}`);
             str += `\t\t\t<router-link to="/${
               // name.componentName
               name
@@ -142,7 +153,7 @@ export default {
         });
         str += '\t\t\t<router-view></router-view>\n\t\t</div>\n';
       } else {
-        console.log(`else (if compName === 'App'`);
+        // console.log(`else (if compName === 'App'`);
         str += `<div>\n`;
         children.forEach(name => {
           str += `\t\t<${
@@ -157,16 +168,19 @@ export default {
 
       return `<template>\n\t${str}\t</div>\n</template>`;
     },
+    /**
+     * changed name.componentName = name
+     */
     writeScript(componentName, children) {
       let str = '';
       children.forEach(name => {
-        str += `import ${name.componentName} from '@/components/${
-          name.componentName
+        str += `import ${name} from '@/components/${
+          name
         }.vue';\n`;
       });
       let childrenComponentNames = '';
       children.forEach(name => {
-        childrenComponentNames += `\t\t${name.componentName},\n`;
+        childrenComponentNames += `\t\t${name},\n`;
       });
       return `\n\n<script>\n${str}\nexport default {\n\tname: '${componentName}',\n\tcomponents: {\n${childrenComponentNames}\t}\n};\n<\/script>`;
     },
