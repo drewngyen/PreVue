@@ -207,6 +207,7 @@ export default {
     ...mapState(['componentMap'])
   },
   mounted() {
+    // executed when export button is clicked
     ipc.on('export-project-location', (event, data) => {
       if (!fs.existsSync(data)) {
         fs.mkdirSync(data);
