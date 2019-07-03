@@ -45,7 +45,7 @@ export default {
     createRouterImports(appChildren) {
       let str = "import Vue from 'vue'\nimport Router from 'vue-router'\n";
       appChildren.forEach(child => {
-        console.log(`createRouterImports child: ${child}`);
+        // console.log(`createRouterImports child: ${child}`);
         str += `import ${
           // child.componentName
           child
@@ -67,16 +67,16 @@ export default {
       let str =
         "export default new Router({\n\tmode: 'history',\n\tbase: process.env.BASE_URL,\n\troutes: [\n";
       appChildren.forEach(child => {
-        console.log(`createExport child: ${child}`);
+        // console.log(`createExport child: ${child}`);
         // changed if/else: `child.componentName` to `name`
         if (child === 'HomeView') {
-          console.log(`if createExport addChildren child.componentName${child.componentName}`);
+          // console.log(`if createExport addChildren child.componentName${child.componentName}`);
           str += `\t\t{\n\t\t\tpath: '/',\n\t\t\tname:'${
             child
           }',\n\t\t\tcomponent:${child}\n\t\t},\n`;
       }
         else {
-          console.log(`else createExport addChildren child.componentName${child}`);
+          // console.log(`else createExport addChildren child.componentName${child}`);
           str += `\t\t{\n\t\t\tpath: '/${child}',\n\t\t\tname:'${
             child
           }',\n\t\t\tcomponent: ${child}\n\t\t},\n`;
@@ -115,7 +115,8 @@ export default {
     },
     /**
      * @description creates the <router-link> boilerplate for /views/components  
-     * changed name.componentName to name, name is the reference to the object name(?) 
+     * also creates the <template></template> tag for each component
+     * changed name.componentName to name, name is the reference to the object name(?)
      * bug: name.componentName is a bad reference, something is wrong with it
      */
     writeTemplate(compName, children) {
@@ -165,11 +166,19 @@ export default {
             }>\n`;
         });
       }
-
       return `<template>\n\t${str}\t</div>\n</template>`;
     },
     /**
+     * @description helper function for writeTemplate
+     *  - gets objects from htmlList from appropriate component and adds them to the template string
+     * @input: componentMap['component'].htmlList[tag elements]
+     */
+    writeTemplateTag() {
+      // create reference object
+    },
+    /**
      * changed name.componentName = name
+     * @description imports child components into style
      */
     writeScript(componentName, children) {
       let str = '';
@@ -184,6 +193,9 @@ export default {
       });
       return `\n\n<script>\n${str}\nexport default {\n\tname: '${componentName}',\n\tcomponents: {\n${childrenComponentNames}\t}\n};\n<\/script>`;
     },
+    /**
+     * @description writes the <style> in vue component, if component is 'App', writes a shitton of css, else returns <style scoped
+     */
     writeStyle(componentName) {
       let style =
         componentName !== 'App'
@@ -294,7 +306,7 @@ export default {
       if (!fs.existsSync(data)) {
         fs.mkdirSync(data);
         console.log('FOLDER CREATED!');
-        console.log(`data: ${data}`); // displays the directory path
+        // console.log(`data: ${data}`); // displays the directory path
         fs.mkdirSync(path.join(data, 'public'));
         fs.mkdirSync(path.join(data, 'src'));
         fs.mkdirSync(path.join(data, 'src', 'assets'));
@@ -316,7 +328,7 @@ export default {
       this.createBabel(data);
       this.createPackage(data);
 
-      // main logic below for creating components? 
+      // main logic below for creating components?
       this.createRouter(data);
 
       for (let componentName in this.componentMap) {
