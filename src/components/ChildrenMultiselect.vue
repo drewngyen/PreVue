@@ -25,8 +25,9 @@ export default {
   },
   computed: {
     ...mapState([
-      'componentMap',
       'routes',
+      // comes from store/state/index.js
+      'componentMap',
       'activeComponent',
       'componentChildrenMultiselectValue',
       'modalOpen'

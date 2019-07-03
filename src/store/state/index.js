@@ -19,7 +19,9 @@ const newState = {
   routes: {
     HomeView: []
   },
-
+  /**
+   * 
+   */
   componentNameInputValue: '',
   projects: [{ filename: 'Untitled-1', lastSavedLocation: '' }],
   activeRoute: 'HomeView',
