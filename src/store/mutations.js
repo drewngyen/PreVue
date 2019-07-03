@@ -21,6 +21,7 @@ const mutations = {
     };
   },
   // adds a html tag from the Icons.vue to the HomeQueue.vue
+  // event: getClickedIcon @Icons.vue
   [types.ADD_TO_SELECTED_ELEMENT_LIST]: (state, payload) => {
     state.selectedElementList.push({ text: payload, children: [] });
   },
@@ -60,6 +61,7 @@ const mutations = {
     const componentName = state.activeComponent;
     state.componentMap[componentName].htmlList = payload;
   },
+  // deletes selected component
   [types.DELETE_ACTIVE_COMPONENT]: state => {
     const { componentMap, activeComponent } = state;
 
@@ -79,6 +81,7 @@ const mutations = {
     console.log(payload);
     state.componentMap = payload;
   },
+  // deletes a element html tag from HomeQueue
   [types.DELETE_SELECTED_ELEMENT]: (state, payload) => {
     state.selectedElementList.splice(payload, 1);
   },
@@ -95,13 +98,14 @@ const mutations = {
   [types.CHANGE_ACTIVE_TAB]: (state, payload) => {
     state.activeTab = payload;
   },
+  // adds a new route in the RouteDisplay
   [types.ADD_ROUTE]: (state, payload) => {
     state.routes = {
       ...state.routes,
       [payload]: []
     };
   },
-  // 
+  // Changes the component map
   [types.ADD_ROUTE_TO_COMPONENT_MAP]: (state, payload) => {
     const { route, children } = payload;
     state.componentMap = {
@@ -127,6 +131,8 @@ const mutations = {
   [types.SET_ROUTES]: (state, payload) => {
     state.routes = Object.assign({}, payload);
   },
+  // invoked when a component is deleted
+  // 
   [types.SET_ACTIVE_ROUTE_ARRAY]: (state, payload) => {
     state.routes[state.activeRoute] = payload;
   },
@@ -141,8 +147,10 @@ const mutations = {
     });
     state.activeTab = state.activeTab - 1;
   },
-  // executed when a new component is made, also invoked when a child is added to the parent from the sidebar (EditSidebar or HomeSidebar?)
+  // executed when a new component is made
+  // also invoked when a child is added to the parent from the sidebar (EditSidebar or HomeSidebar?)
   // also invoked when clicked on invoking the modal-view
+  // event: @ VueMultiselect
   [types.UPDATE_COMPONENT_CHILDREN_MULTISELECT_VALUE]: (state, payload) => {
     state.componentChildrenMultiselectValue = payload;
   },
@@ -159,6 +167,7 @@ const mutations = {
   [types.UPDATE_COMPONENT_NAME_INPUT_VALUE]: (state, payload) => {
     state.componentNameInputValue = payload;
   },
+  // invoked when a new route is created
   [types.ADD_COMPONENT_TO_COMPONENT_CHILDREN]: (state, payload) => {
     const { component, value } = payload;
     state.componentMap[component].children.push(value);

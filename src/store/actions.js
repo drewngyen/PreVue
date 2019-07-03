@@ -22,11 +22,13 @@ const actions = {
       commit(types.SET_SELECTED_ELEMENT_LIST, []);
     }
   },
+  // sets component inside componentDisplay
   [types.setSelectedElementList]: ({ commit }, payload) => {
     if (payload) {
       commit(types.SET_SELECTED_ELEMENT_LIST, payload);
     }
   },
+  // adds component to the homeQueue
   [types.addToSelectedElementList]: ({ commit }, payload) => {
     commit(types.ADD_TO_SELECTED_ELEMENT_LIST, payload);
   },
