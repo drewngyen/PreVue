@@ -20,6 +20,8 @@ export default {
     exportProject: function() {
       ipc.send('show-export-dialog');
     },
+
+    //createRouter method is buggy
     createRouter(location) {
       fs.writeFileSync(
         path.join(location, 'src', 'router.js'),
