@@ -48,8 +48,9 @@ export default {
     ]),
     // 
     handleSelect(value) {
-      console.log('VALUE', value);
-      if (this.modalOpen) this.updateActiveComponentChildrenValue(value);
+      // if (this.modalOpen) this.updateActiveComponentChildrenValue(value);
+      console.log('Multiselect: ', value);
+      this.updateActiveComponentChildrenValue(value);
       this.updateComponentChildrenMultiselectValue(value);
     }
   }

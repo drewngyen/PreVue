@@ -80,14 +80,14 @@ export default {
     onDoubleClick(compData) {
       this.setActiveComponent(compData.componentName);
       this.activeComponentData.isActive = true;
-      ModalProgrammatic.open({
-        parent: this,
-        component: ModalView,
-        onCancel: () => {
-          this.updateOpenModal(false);
-          this.setActiveComponent('');
-        }
-      });
+      // ModalProgrammatic.open({
+      //   parent: this,
+      //   component: ModalView,
+      //   onCancel: () => {
+      //     this.updateOpenModal(false);
+      //     this.setActiveComponent('');
+      //   }
+      // });
     }
   }
 };

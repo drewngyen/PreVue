@@ -157,6 +157,9 @@ const mutations = {
   // additionally addes children to the component
   [types.UPDATE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
     const { component, value } = payload;
+    console.log('IN MUTATIONS: ', value);
+    console.log('Type: ', typeof value);
+
     state.componentMap[component].children = value;
   },
   [types.UPDATE_ACTIVE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
