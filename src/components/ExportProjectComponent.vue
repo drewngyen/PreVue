@@ -8,8 +8,9 @@
   </button>
 </template>
 
-// Where all of the boilerplate is exported
+
 <script>
+// Where all of the boilerplate is exported
 import { mapState } from 'vuex';
 const { remote } = require('electron');
 import fs from 'fs-extra';
