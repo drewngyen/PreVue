@@ -7,7 +7,7 @@
       type="tree"
       :zoomable="true"
       :duration="0"
-      :radius="7"
+      :radius="9"
     ></tree>
   </div>
 </template>
@@ -93,13 +93,13 @@ export default {
 }
 
 .treeclass .nodetree text {
-  font: 19px Roboto !important;
-  text-transform: uppercase !important;
+  font-size: 19px !important;
+  /* text-transform: uppercase !important; */
   cursor: pointer;
   text-shadow: none !important;
-  background-color: red !important;
+  /* background-color: red !important; */
   font-weight: bold;
-  color: white !important;
+  /* color: white !important; */
 }
 
 /* .treeclass .node--internal text {
