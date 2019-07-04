@@ -1,9 +1,10 @@
 import * as types from './types';
 
 const actions = {
-  // 
+  // ADDS NEW component to Route
   [types.registerComponent]: ({ state, commit }, payload) => {
     const { componentName } = payload;
+    // check if component exists in state
     if (!state.componentMap[componentName]) {
       commit(types.ADD_COMPONENT_TO_COMPONENT_MAP, payload);
       commit(
@@ -11,8 +12,9 @@ const actions = {
         payload.componentName
       );
       commit(types.ADD_COMPONENT_TO_ACTIVE_ROUTE_IN_ROUTE_MAP, payload);
-
+      // assigns input to component name
       let component = state.componentNameInputValue;
+      // assigns html tags to component
       let value = state.componentChildrenMultiselectValue.map(component => {
         return state.componentMap[component];
       });

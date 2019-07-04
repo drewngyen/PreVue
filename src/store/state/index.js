@@ -20,7 +20,7 @@ const newState = {
     // NewView: {}
   },
   routes: {
-    HomeView: [],
+    HomeView: []
     // NewView: []
   },
   /**

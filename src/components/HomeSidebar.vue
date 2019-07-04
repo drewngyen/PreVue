@@ -55,6 +55,7 @@ export default {
       'updateComponentNameInputValue'
     ]),
     handleClick() {
+      // payload of registerComponent
       const component = {
         componentName: this.componentNameInputValue,
         x: 0,
