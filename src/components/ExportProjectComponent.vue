@@ -3,7 +3,7 @@
   <button @click="exportProject">
     <i class="fas fa-file-export fa-lg"></i>
 
-    <br>
+    <br />
     <span class="white--text">Export Project</span>
   </button>
 </template>
@@ -24,10 +24,11 @@ export default {
     /**
      * @description creates the router.js file
      * input: path to dir
-     * invokes: createRouterImports(this.componentMap['App'].children), 
+     * invokes: createRouterImports(this.componentMap['App'].children),
      *          createExport(this.componentMap['App'].children)
      * bug: this.componentMap['App'].children might have bad reference to state..
-     *  */ 
+     *  */
+
     createRouter(location) {
       fs.writeFileSync(
         path.join(location, 'src', 'router.js'),
@@ -39,7 +40,7 @@ export default {
     /**
      * @description import routed components from the /views/ dir
      * @argument: this.componentMap['App'].children
-     * bug: showing undefined in the import routes 
+     * bug: showing undefined in the import routes
      * fix: changing the child.componentName to child
      */
     createRouterImports(appChildren) {
@@ -49,7 +50,7 @@ export default {
         str += `import ${
           // child.componentName
           child
-          } from './views/${
+        } from './views/${
           // this reference to store state is buggy, returns undefined
           //  import undefined from './views/undefined.vue'
           // child.componentName
@@ -71,22 +72,17 @@ export default {
         // changed if/else: `child.componentName` to `name`
         if (child === 'HomeView') {
           // console.log(`if createExport addChildren child.componentName${child.componentName}`);
-          str += `\t\t{\n\t\t\tpath: '/',\n\t\t\tname:'${
-            child
-          }',\n\t\t\tcomponent:${child}\n\t\t},\n`;
-      }
-        else {
+          str += `\t\t{\n\t\t\tpath: '/',\n\t\t\tname:'${child}',\n\t\t\tcomponent:${child}\n\t\t},\n`;
+        } else {
           // console.log(`else createExport addChildren child.componentName${child}`);
-          str += `\t\t{\n\t\t\tpath: '/${child}',\n\t\t\tname:'${
-            child
-          }',\n\t\t\tcomponent: ${child}\n\t\t},\n`;
+          str += `\t\t{\n\t\t\tpath: '/${child}',\n\t\t\tname:'${child}',\n\t\t\tcomponent: ${child}\n\t\t},\n`;
         }
       });
       str += `\t]\n})\n`;
       return str;
     },
     /**
-     * @description 
+     * @description
      * invokes: writeTemplate, writeScript, writeStyle
      * bug: name.componentName
      */
@@ -114,13 +110,52 @@ export default {
       }
     },
     /**
-     * @description creates the <router-link> boilerplate for /views/components  
+     * @description helper function for writeTemplate
+     * @name writeTemplateTag
+     *  - gets objects from htmlList from appropriate component and adds them to the template string, then inserts into writeTemplate return str
+     * @input: componentMap['component'].htmlList[tag elements]
+     */
+    writeTemplateTag(compName) {
+    console.log('writeTemplateTag invoked!');
+    // create reference object
+    const htmlElementMap = {
+      div: ['<div>', '</div>'],
+      button: ['<button>', '</button>'],
+      form: ['<form>', '</form>'],
+      img: ['<img>', ''],
+      link: ['<a href="#"/>', ''],
+      list: ['<li>', '</li>'],
+      paragraph: ['<p>', '</p>'],
+      'list-ol': ['<ol>', '</ol>'],
+      'list-ul': ['<ul>', '</ul>'],
+      input: ['<input />', ''],
+      navbar: ['<nav>', '</nav>']
+    };
+    // loop to iterate through compName arr
+    let htmlArr = this.componentMap[compName].htmlList;
+    let outputStr = '';
+    for (let el of htmlArr) {
+      outputStr += '\t\t';
+      outputStr += htmlElementMap[el.text][0];
+      outputStr += htmlElementMap[el.text][1];
+      outputStr += `\n`;
+    }
+    console.log(`outputStr from writeTemplateTag: ${outputStr}`);
+    return outputStr;
+
+  },
+    /*
+     * @description creates the <router-link> boilerplate for /views/components
      * also creates the <template></template> tag for each component
      * changed name.componentName to name, name is the reference to the object name(?)
      * bug: name.componentName is a bad reference, something is wrong with it
      */
     writeTemplate(compName, children) {
       let str = '';
+      let htmlArr = this.componentMap[compName].htmlList;
+      // for (let el of htmlArr) {
+      //   console.log(`el of htmlArr: ${el.text}`);
+      // }
       if (compName === 'App') {
         // console.log(`form if compName === 'App'`);
         // console.log(`children: ${children}`)
@@ -138,15 +173,13 @@ export default {
               // name.componentName
               name
             }</router-link>\n`;
-            
-          }
-          else {
+          } else {
             // console.log(`else invoked`);
             // console.log(`name: ${name}`);
             str += `\t\t\t<router-link to="/${
               // name.componentName
               name
-              }">${
+            }">${
               // name.componentName
               name
             }</router-link>\n`;
@@ -158,23 +191,20 @@ export default {
         str += `<div>\n`;
         children.forEach(name => {
           str += `\t\t<${
-          // name.componentName
-          name
+            // name.componentName
+            name
           }>\n\t\t</${
             // name.componentName
             name
-            }>\n`;
+          }>\n`;
         });
       }
-      return `<template>\n\t${str}\t</div>\n</template>`;
-    },
-    /**
-     * @description helper function for writeTemplate
-     *  - gets objects from htmlList from appropriate component and adds them to the template string
-     * @input: componentMap['component'].htmlList[tag elements]
-     */
-    writeTemplateTag() {
-      // create reference object
+      // writes the html tag boilerplate
+      let templateTagStr = this.writeTemplateTag(compName);
+      console.log(`templateTagStr: ${templateTagStr}`);
+      let testStr = `<template>\n\t<div>\n${templateTagStr}\t</div>\n</template>`;
+      console.log(`testStr: \n${testStr}`);
+      return `<template>\n\t${str}${templateTagStr}\t</div>\n</template>`;
     },
     /**
      * changed name.componentName = name
@@ -183,9 +213,7 @@ export default {
     writeScript(componentName, children) {
       let str = '';
       children.forEach(name => {
-        str += `import ${name} from '@/components/${
-          name
-        }.vue';\n`;
+        str += `import ${name} from '@/components/${name}.vue';\n`;
       });
       let childrenComponentNames = '';
       children.forEach(name => {
@@ -314,12 +342,12 @@ export default {
         fs.mkdirSync(path.join(data, 'src', 'views'));
       }
       /*
-      fs.copySync(
-        path.join(remote.app.getAppPath(), '../vue-boiler-plate-routes/'),
-        data
-      );
-      .then(() => console.log('success!'))
-      .catch(err => console.err(err));
+        fs.copySync(
+          path.join(remote.app.getAppPath(), '../vue-boiler-plate-routes/'),
+          data
+        );
+        .then(() => console.log('success!'))
+        .catch(err => console.err(err));
       */
 
       // creating basic boilerplate for vue app
