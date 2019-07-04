@@ -163,7 +163,10 @@ const mutations = {
     state.componentMap[component].children = value;
   },
   [types.UPDATE_ACTIVE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
+
+    //original line
     state.componentMap[state.activeComponent].children = payload;
+    state.componentMap[state.activeRoute].children = state.componentMap[state.activeRoute].children.filter(el => el !== payload[0]);
   },
   // allows usr to change the name of component!!
   [types.UPDATE_COMPONENT_NAME_INPUT_VALUE]: (state, payload) => {
