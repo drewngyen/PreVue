@@ -21,10 +21,6 @@ export default {
     exportProject: function() {
       ipc.send('show-export-dialog');
     },
-<<<<<<< HEAD
-
-    //createRouter method is buggy
-=======
     /**
      * @description creates the router.js file
      * input: path to dir
@@ -32,7 +28,6 @@ export default {
      *          createExport(this.componentMap['App'].children)
      * bug: this.componentMap['App'].children might have bad reference to state..
      *  */ 
->>>>>>> ed4b0dbc603b3cae3de615079223a53028b60a7b
     createRouter(location) {
       fs.writeFileSync(
         path.join(location, 'src', 'router.js'),
