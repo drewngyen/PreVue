@@ -25,8 +25,9 @@ export default {
   },
   computed: {
     ...mapState([
-      'componentMap',
       'routes',
+      // comes from store/state/index.js
+      'componentMap',
       'activeComponent',
       'componentChildrenMultiselectValue',
       'modalOpen'
@@ -45,9 +46,11 @@ export default {
       'updateComponentChildrenMultiselectValue',
       'updateActiveComponentChildrenValue'
     ]),
+    // 
     handleSelect(value) {
-      console.log('VALUE', value);
-      if (this.modalOpen) this.updateActiveComponentChildrenValue(value);
+      // if (this.modalOpen) this.updateActiveComponentChildrenValue(value);
+      console.log('Multiselect: ', value);
+      this.updateActiveComponentChildrenValue(value);
       this.updateComponentChildrenMultiselectValue(value);
     }
   }

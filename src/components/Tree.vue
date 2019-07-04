@@ -7,7 +7,7 @@
       type="tree"
       :zoomable="true"
       :duration="0"
-      :radius="7"
+      :radius="9"
     ></tree>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
   },
   methods: {
     formatComponentMap(compMap) {
+      console.log('\n Map : ', compMap, '\n');
       let result = [];
       Object.values(compMap).forEach(compData => {
         result.push({
@@ -48,17 +49,30 @@ export default {
       let result = {};
       const nodes = {};
       const formattedData = this.formatComponentMap(data);
+      
+      // console.log('\n >>>> Formatted data <<<<');
+      // console.log('FormattedData: ', formattedData, '\n');
+      
+      // console.log('\n >>>> TRANSFORM TO TREE <<<< \n');
+
       formattedData.forEach(component => {
         if (!nodes[component.name]) {
           nodes[component.name] = { name: component.name, children: [] };
           result = nodes;
         }
-
+        // console.log('CURRENT COMPONENT: ', component.name);
         component.children.forEach(child => {
+          // if(typeof child === 'object') child = child.componentName;
           nodes[child] = { name: child, children: [] };
           nodes[component.name].children.push(nodes[child]);
+          // console.log('Adding child: ', typeof child, child);
+          // console.log('\n');
         });
       });
+
+      console.log('\n >>>> RESULTS <<<< ');
+      console.log(result);
+      console.log('\n >>>> ______ <<<<');
       return result;
     },
 
@@ -79,13 +93,13 @@ export default {
 }
 
 .treeclass .nodetree text {
-  font: 19px Roboto !important;
-  text-transform: uppercase !important;
+  font-size: 19px !important;
+  /* text-transform: uppercase !important; */
   cursor: pointer;
   text-shadow: none !important;
-  background-color: red !important;
+  /* background-color: red !important; */
   font-weight: bold;
-  color: white !important;
+  /* color: white !important; */
 }
 
 /* .treeclass .node--internal text {

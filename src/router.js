@@ -11,6 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
+      // HomeView.vue component 
       component: Home
     },
     {

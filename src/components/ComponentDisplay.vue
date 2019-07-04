@@ -35,6 +35,7 @@ export default {
     };
   },
   mounted() {
+    // when component is mounted add ability to delete
     window.addEventListener('keyup', event => {
       if (event.key === 'Backspace') {
         if (this.activeComponent && this.activeComponentData.isActive) {
@@ -45,10 +46,13 @@ export default {
   },
   computed: {
     ...mapState(['routes', 'activeRoute', 'activeComponent', 'componentMap']),
+    // used in VueDraggableResizeable component 
     activeRouteArray() {
       return this.routes[this.activeRoute];
     },
+    // used to delete components 
     activeComponentData() {
+      // find out what this does
       return this.activeRouteArray.filter(componentData => {
         return componentData.componentName === this.activeComponent;
       })[0];
@@ -76,14 +80,14 @@ export default {
     onDoubleClick(compData) {
       this.setActiveComponent(compData.componentName);
       this.activeComponentData.isActive = true;
-      ModalProgrammatic.open({
-        parent: this,
-        component: ModalView,
-        onCancel: () => {
-          this.updateOpenModal(false);
-          this.setActiveComponent('');
-        }
-      });
+      // ModalProgrammatic.open({
+      //   parent: this,
+      //   component: ModalView,
+      //   onCancel: () => {
+      //     this.updateOpenModal(false);
+      //     this.setActiveComponent('');
+      //   }
+      // });
     }
   }
 };

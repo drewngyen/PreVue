@@ -37,6 +37,9 @@
 </template>
 
 <script>
+// find out what mapState does, seems to be not connected..
+  // mapState object declares all of the store state properties or getters
+  // toots described methods such as: mapActions, mapGetters
 import { mapState } from 'vuex';
 import fs from 'fs-extra';
 import path from 'path';
@@ -56,6 +59,8 @@ const Mousetrap = require('mousetrap');
 
 export default {
   name: 'NavBar',
+  // find out what the props do, seem to not be connected
+    // props are custom attributes registered to the component 
   props: ['route', 'imageURL'],
 
   components: {
