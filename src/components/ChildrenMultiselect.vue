@@ -7,9 +7,10 @@
       :close-on-select="false"
       :options="options"
       :value="componentChildrenMultiselectValue"
-      @input="updateComponentChildrenMultiselectValue"
+      @input="handleSelect"
       :max-height="150"
       :option-height="20"
+      :searchable="false"
     ></multiselect>
   </div>
 </template>
@@ -24,10 +25,12 @@ export default {
   },
   computed: {
     ...mapState([
-      'componentMap',
       'routes',
+      // comes from store/state/index.js
+      'componentMap',
       'activeComponent',
-      'componentChildrenMultiselectValue'
+      'componentChildrenMultiselectValue',
+      'modalOpen'
     ]),
     options() {
       const routes = Object.keys(this.routes);
@@ -39,7 +42,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateComponentChildrenMultiselectValue'])
+    ...mapActions([
+      'updateComponentChildrenMultiselectValue',
+      'updateActiveComponentChildrenValue'
+    ]),
+    // 
+    handleSelect(value) {
+      // if (this.modalOpen) this.updateActiveComponentChildrenValue(value);
+      console.log('Multiselect: ', value);
+      this.updateActiveComponentChildrenValue(value);
+      this.updateComponentChildrenMultiselectValue(value);
+    }
   }
 };
 </script>

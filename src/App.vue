@@ -3,6 +3,8 @@
     <NavBar imageUrl="../src/assets/logo.png"></NavBar>
 
     <section class="section">
+      <!-- where the fuck is this router view≈ -->
+      <!-- implented from App -> main.js -> router.js -->
       <router-view />
     </section>
   </div>

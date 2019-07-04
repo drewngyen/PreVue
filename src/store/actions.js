@@ -1,11 +1,15 @@
 import * as types from './types';
 
 const actions = {
+  // 
   [types.registerComponent]: ({ state, commit }, payload) => {
     const { componentName } = payload;
     if (!state.componentMap[componentName]) {
       commit(types.ADD_COMPONENT_TO_COMPONENT_MAP, payload);
-      commit(types.ADD_COMPONENT_TO_ACTIVE_ROUTE_CHILDREN, payload);
+      commit(
+        types.ADD_COMPONENT_TO_ACTIVE_ROUTE_CHILDREN,
+        payload.componentName
+      );
       commit(types.ADD_COMPONENT_TO_ACTIVE_ROUTE_IN_ROUTE_MAP, payload);
 
       let component = state.componentNameInputValue;
@@ -18,17 +22,22 @@ const actions = {
       commit(types.SET_SELECTED_ELEMENT_LIST, []);
     }
   },
+  // sets component inside componentDisplay
   [types.setSelectedElementList]: ({ commit }, payload) => {
     if (payload) {
       commit(types.SET_SELECTED_ELEMENT_LIST, payload);
     }
   },
+  // adds component to the homeQueue
   [types.addToSelectedElementList]: ({ commit }, payload) => {
     commit(types.ADD_TO_SELECTED_ELEMENT_LIST, payload);
   },
   [types.addToComponentElementList]: ({ commit }, payload) => {
     commit(types.ADD_TO_COMPONENT_HTML_LIST, payload);
   },
+  /**
+   * @module: UNUSED?
+   */
   [types.setClickedElementList]: ({ commit }, payload) => {
     commit(types.SET_CLICKED_ELEMENT_LIST, payload);
   },
@@ -41,7 +50,7 @@ const actions = {
     commit(types.SET_ACTIVE_ROUTE_ARRAY, newActiveRouteArray);
     commit(types.SET_ACTIVE_COMPONENT, '');
   },
-  [types.deleteSelectedElement]: ({ state, commit }, payload) => {
+  [types.deleteSelectedElement]: ({ commit }, payload) => {
     commit(types.DELETE_SELECTED_ELEMENT, payload);
   },
   [types.setState]: ({ commit }, payload) => {
@@ -66,7 +75,7 @@ const actions = {
     let children = [];
     commit(types.ADD_ROUTE_TO_COMPONENT_MAP, { route, children });
     let component = 'App';
-    let value = state.componentMap[state.activeRoute];
+    let value = state.componentMap[state.activeRoute].componentName;
     commit(types.ADD_COMPONENT_TO_COMPONENT_CHILDREN, { component, value });
   },
   [types.setActiveRoute]: ({ commit }, payload) => {
@@ -85,11 +94,14 @@ const actions = {
     commit(types.UPDATE_COMPONENT_CHILDREN_MULTISELECT_VALUE, payload);
   },
   [types.updateActiveComponentChildrenValue]: ({ commit }, payload) => {
+    console.log('payload', payload);
     commit(types.UPDATE_ACTIVE_COMPONENT_CHILDREN_VALUE, payload);
-    commit(types.UPDATE_COMPONENT_CHILDREN_MULTISELECT_VALUE, []);
   },
   [types.updateComponentNameInputValue]: ({ commit }, payload) => {
     commit(types.UPDATE_COMPONENT_NAME_INPUT_VALUE, payload);
+  },
+  [types.updateOpenModal]: ({ commit }, payload) => {
+    commit(types.UPDATE_OPEN_MODAL, payload);
   }
 };
 

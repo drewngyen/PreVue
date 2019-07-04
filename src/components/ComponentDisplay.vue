@@ -13,7 +13,7 @@
       @deactivated="onDeactivated(componentData)"
       @dragging="onDrag"
       @resizing="onResize"
-      @dblclick.native="onDoubleClick"
+      @dblclick.native="onDoubleClick(componentData)"
     >
       <h3>{{ componentData.componentName }}</h3>
     </VueDraggableResizable>
@@ -35,6 +35,7 @@ export default {
     };
   },
   mounted() {
+    // when component is mounted add ability to delete
     window.addEventListener('keyup', event => {
       if (event.key === 'Backspace') {
         if (this.activeComponent && this.activeComponentData.isActive) {
@@ -45,17 +46,20 @@ export default {
   },
   computed: {
     ...mapState(['routes', 'activeRoute', 'activeComponent', 'componentMap']),
+    // used in VueDraggableResizeable component 
     activeRouteArray() {
       return this.routes[this.activeRoute];
     },
+    // used to delete components 
     activeComponentData() {
+      // find out what this does
       return this.activeRouteArray.filter(componentData => {
         return componentData.componentName === this.activeComponent;
       })[0];
     }
   },
   methods: {
-    ...mapActions(['setActiveComponent']),
+    ...mapActions(['setActiveComponent', 'updateOpenModal']),
     onResize: function(x, y, width, height) {
       this.activeComponentData.x = x;
       this.activeComponentData.y = y;
@@ -73,11 +77,17 @@ export default {
     onDeactivated() {
       this.activeComponentData.isActive = false;
     },
-    onDoubleClick() {
-      ModalProgrammatic.open({
-        parent: this,
-        component: ModalView
-      });
+    onDoubleClick(compData) {
+      this.setActiveComponent(compData.componentName);
+      this.activeComponentData.isActive = true;
+      // ModalProgrammatic.open({
+      //   parent: this,
+      //   component: ModalView,
+      //   onCancel: () => {
+      //     this.updateOpenModal(false);
+      //     this.setActiveComponent('');
+      //   }
+      // });
     }
   }
 };

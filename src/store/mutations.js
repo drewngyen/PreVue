@@ -3,6 +3,7 @@ import * as types from './types';
 import localforage from 'localforage';
 
 const mutations = {
+  // pushs new component to componentMap
   [types.ADD_COMPONENT_TO_COMPONENT_MAP]: (state, payload) => {
     const { componentName, htmlList, children, isActive } = payload;
     state.componentMap = {
@@ -19,9 +20,13 @@ const mutations = {
       }
     };
   },
+  // adds a html tag from the Icons.vue to the HomeQueue.vue
+  // event: getClickedIcon @Icons.vue
   [types.ADD_TO_SELECTED_ELEMENT_LIST]: (state, payload) => {
     state.selectedElementList.push({ text: payload, children: [] });
   },
+  // allows user to create a new component in ComponentDisplay.vue
+    // invovled in creating a new component, porbably does more
   [types.SET_SELECTED_ELEMENT_LIST]: (state, payload) => {
     state.selectedElementList = payload;
   },
@@ -51,11 +56,11 @@ const mutations = {
     }
     parseAndDelete(htmlList);
   },
-
   [types.SET_CLICKED_ELEMENT_LIST]: (state, payload) => {
     const componentName = state.activeComponent;
     state.componentMap[componentName].htmlList = payload;
   },
+  // deletes selected component
   [types.DELETE_ACTIVE_COMPONENT]: state => {
     const { componentMap, activeComponent } = state;
 
@@ -75,6 +80,7 @@ const mutations = {
     console.log(payload);
     state.componentMap = payload;
   },
+  // deletes a element html tag from HomeQueue
   [types.DELETE_SELECTED_ELEMENT]: (state, payload) => {
     state.selectedElementList.splice(payload, 1);
   },
@@ -91,12 +97,14 @@ const mutations = {
   [types.CHANGE_ACTIVE_TAB]: (state, payload) => {
     state.activeTab = payload;
   },
+  // adds a new route in the RouteDisplay
   [types.ADD_ROUTE]: (state, payload) => {
     state.routes = {
       ...state.routes,
       [payload]: []
     };
   },
+  // Changes the component map
   [types.ADD_ROUTE_TO_COMPONENT_MAP]: (state, payload) => {
     const { route, children } = payload;
     state.componentMap = {
@@ -107,21 +115,27 @@ const mutations = {
       }
     };
   },
+  // changes the route map (ie. homeview -> homeview_2_test)
   [types.SET_ACTIVE_ROUTE]: (state, payload) => {
     state.activeRoute = payload;
   },
+  // probably places the component inside the same route map (ie. homeview)
   [types.ADD_COMPONENT_TO_ACTIVE_ROUTE_IN_ROUTE_MAP]: (state, payload) => {
     state.routes[state.activeRoute].push(payload);
   },
+  // invoked when a component is selected
   [types.SET_ACTIVE_COMPONENT]: (state, payload) => {
     state.activeComponent = payload;
   },
   [types.SET_ROUTES]: (state, payload) => {
     state.routes = Object.assign({}, payload);
   },
+  // invoked when a component is deleted
+  // 
   [types.SET_ACTIVE_ROUTE_ARRAY]: (state, payload) => {
     state.routes[state.activeRoute] = payload;
   },
+  // adds the component to the selected route (ex: HomeView)
   [types.ADD_COMPONENT_TO_ACTIVE_ROUTE_CHILDREN]: (state, payload) => {
     state.componentMap[state.activeRoute].children.push(payload);
   },
@@ -132,22 +146,37 @@ const mutations = {
     });
     state.activeTab = state.activeTab - 1;
   },
+  // executed when a new component is made
+  // also invoked when a child is added to the parent from the sidebar (EditSidebar or HomeSidebar?)
+  // also invoked when clicked on invoking the modal-view
+  // event: @ VueMultiselect
   [types.UPDATE_COMPONENT_CHILDREN_MULTISELECT_VALUE]: (state, payload) => {
     state.componentChildrenMultiselectValue = payload;
   },
+  // executed when a new component is made
+  // additionally addes children to the component
   [types.UPDATE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
     const { component, value } = payload;
+    console.log('IN MUTATIONS: ', value);
+    console.log('Type: ', typeof value);
+
     state.componentMap[component].children = value;
   },
   [types.UPDATE_ACTIVE_COMPONENT_CHILDREN_VALUE]: (state, payload) => {
     state.componentMap[state.activeComponent].children = payload;
   },
+  // allows usr to change the name of component!!
   [types.UPDATE_COMPONENT_NAME_INPUT_VALUE]: (state, payload) => {
     state.componentNameInputValue = payload;
   },
+  // invoked when a new route is created
   [types.ADD_COMPONENT_TO_COMPONENT_CHILDREN]: (state, payload) => {
     const { component, value } = payload;
     state.componentMap[component].children.push(value);
+  },
+  // invoked when element is double clicked, changing the boolean value
+  [types.UPDATE_OPEN_MODAL]: (state, payload) => {
+    state.modalOpen = payload;
   }
 };
 
