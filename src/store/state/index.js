@@ -4,7 +4,7 @@ import htmlElementMap from './htmlElementMap';
 const newState = {
   icons,
   htmlElementMap,
-  // every single time we create a component
+  // new components added to the componentMap
   // sent to export project component
   componentMap: {
     App: {

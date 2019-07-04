@@ -59,6 +59,7 @@ export default {
           nodes[component.name].children.push(nodes[child]);
         });
       });
+      console.log(`Tree.vue result: ${JSON.stringify(result)}`)
       return result;
     },
 

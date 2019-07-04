@@ -1,8 +1,6 @@
 <template>
-  <!-- <i class="fas fa-file-export fa-lg" @click="exportProject"></i> -->
   <button @click="exportProject">
     <i class="fas fa-file-export fa-lg"></i>
-
     <br />
     <span class="white--text">Export Project</span>
   </button>
@@ -60,7 +58,7 @@ export default {
       return str;
     },
     /**
-     * @description creates the `export default`
+     * @description creates the `export default` in each component
      * bug: path: '/undefined', name: 'undefined', component: undefined
      * issue: child.componentName returning undefined
      */
@@ -116,34 +114,33 @@ export default {
      * @input: componentMap['component'].htmlList[tag elements]
      */
     writeTemplateTag(compName) {
-    console.log('writeTemplateTag invoked!');
-    // create reference object
-    const htmlElementMap = {
-      div: ['<div>', '</div>'],
-      button: ['<button>', '</button>'],
-      form: ['<form>', '</form>'],
-      img: ['<img>', ''],
-      link: ['<a href="#"/>', ''],
-      list: ['<li>', '</li>'],
-      paragraph: ['<p>', '</p>'],
-      'list-ol': ['<ol>', '</ol>'],
-      'list-ul': ['<ul>', '</ul>'],
-      input: ['<input />', ''],
-      navbar: ['<nav>', '</nav>']
-    };
-    // loop to iterate through compName arr
-    let htmlArr = this.componentMap[compName].htmlList;
-    let outputStr = '';
-    for (let el of htmlArr) {
-      outputStr += '\t\t';
-      outputStr += htmlElementMap[el.text][0];
-      outputStr += htmlElementMap[el.text][1];
-      outputStr += `\n`;
-    }
-    console.log(`outputStr from writeTemplateTag: ${outputStr}`);
-    return outputStr;
-
-  },
+      console.log('writeTemplateTag invoked!');
+      // create reference object
+      const htmlElementMap = {
+        div: ['<div>', '</div>'],
+        button: ['<button>', '</button>'],
+        form: ['<form>', '</form>'],
+        img: ['<img>', ''],
+        link: ['<a href="#"/>', ''],
+        list: ['<li>', '</li>'],
+        paragraph: ['<p>', '</p>'],
+        'list-ol': ['<ol>', '</ol>'],
+        'list-ul': ['<ul>', '</ul>'],
+        input: ['<input />', ''],
+        navbar: ['<nav>', '</nav>']
+      };
+      // loop to iterate through compName arr
+      let htmlArr = this.componentMap[compName].htmlList;
+      let outputStr = '';
+      for (let el of htmlArr) {
+        outputStr += '\t\t';
+        outputStr += htmlElementMap[el.text][0];
+        outputStr += htmlElementMap[el.text][1];
+        outputStr += `\n`;
+      }
+      console.log(`outputStr from writeTemplateTag: ${outputStr}`);
+      return outputStr;
+    },
     /*
      * @description creates the <router-link> boilerplate for /views/components
      * also creates the <template></template> tag for each component
@@ -201,9 +198,9 @@ export default {
       }
       // writes the html tag boilerplate
       let templateTagStr = this.writeTemplateTag(compName);
-      console.log(`templateTagStr: ${templateTagStr}`);
-      let testStr = `<template>\n\t<div>\n${templateTagStr}\t</div>\n</template>`;
-      console.log(`testStr: \n${testStr}`);
+      // console.log(`templateTagStr: ${templateTagStr}`);
+      // let testStr = `<template>\n\t<div>\n${templateTagStr}\t</div>\n</template>`;
+      // console.log(`testStr: \n${testStr}`);
       return `<template>\n\t${str}${templateTagStr}\t</div>\n</template>`;
     },
     /**
@@ -358,7 +355,8 @@ export default {
 
       // main logic below for creating components?
       this.createRouter(data);
-
+      // generates components, iterates through every element of componentMap
+      // this also creates the duplicate children
       for (let componentName in this.componentMap) {
         if (componentName !== 'App') {
           if (this.$store.state.routes[componentName]) {
